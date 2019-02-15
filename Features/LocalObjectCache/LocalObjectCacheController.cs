@@ -48,6 +48,12 @@ namespace LOC.Cache.Controllers
 		{
 			if (cacheKey != null)
 			{
+				// 	I'm using the EPiServer.CacheManager.RemoveLocalOnly(), instead of the Remove(), because 
+				//  the Remove() method will automatically forward updates to other machines, and would result 
+				//	in a lot of web service call to multiple machines if clearing all of the cached objects.
+				// 
+				//	If you need to clear the cache on remote machines, Episerver recommends 
+				//  using a master dependency item that can be removed instead, to trigger all items to be removed.
 				foreach (string key in cacheKey)
 				{
 					CacheManager.RemoveLocalOnly(key);

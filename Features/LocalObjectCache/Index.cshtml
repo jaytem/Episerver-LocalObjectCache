@@ -1,0 +1,125 @@
+﻿@using EPiServer.Framework.Web.Resources
+@using System.Collections
+@using EPiServer.Core
+
+@model LOC.Cache.Models.ViewModels.LocalObjectCacheViewModel
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Clear Object Cache</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+	<!-- Shell -->
+	@Html.Raw(ClientResources.RenderResources("ShellCore"))
+
+	<!-- Light Theme -->
+	@Html.Raw(ClientResources.RenderResources("ShellCoreLightTheme"))
+
+	<link href="../../../../App_Themes/Default/Styles/system.css" type="text/css" rel="stylesheet">
+	<link href="../../../../App_Themes/Default/Styles/ToolButton.css" type="text/css" rel="stylesheet">
+
+	<style type="text/css">
+		.widthThird {
+			width: 30%;
+		}
+
+		.stripe tbody tr:nth-child(odd) {
+			background-color: #f0f2f2;
+		}
+
+	</style>
+</head>
+<body id="body">
+	@Html.Raw(Html.ShellInitializationScript())
+
+	<div class="epi-contentContainer epi-padding">
+		<div class="epi-contentArea">
+			<h1 class="EP-Prefix">
+				Object Cache
+			</h1>
+			<p class="EP-systemInfo">This tool shows you the current object cache, and can clear cached items.</p>
+
+			<div id="FullRegion_ValidationSummary" class="EP-validationSummary" style="color: black; display: none;"></div>
+		</div>
+
+		<div class="epi-contentArea epi-formArea">
+			@using (Html.BeginForm("Index", "LocalObjectCache", FormMethod.Post))
+			{
+				<table class="table">
+					<tr>
+						<td>Filter By</td>
+						<td>@Html.DropDownListFor(m => m.FilteredBy, Model.Choices)</td>
+						<td>
+							<span class="epi-cmsButton">
+								<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Refresh" type="submit" name="filter" id="filter" value="Filter" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+							</span>
+						</td>
+					</tr>
+				</table>
+
+			}
+
+			@using (Html.BeginForm("RemoveLocalCache", "LocalObjectCache", FormMethod.Post))
+			{
+
+				<div class="epi-buttonDefault">
+					<span class="epi-cmsButton">
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="clear" id="clear" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+					</span>
+				</div>
+
+				<table class="table table-condensed table-bordered table-condensed stripe">
+					<thead>
+						<tr>
+							<th></th>
+							<th class="widthThird">Key</th>
+							<th class="widthThird">Type</th>
+							<th class="widthThird">@(string.IsNullOrWhiteSpace(Model.FilteredBy) ? "Value" : "Name (ID) Published")</th>
+						</tr>
+						<tr>
+							<td colspan="5"><input type="checkbox" id="clearAll" name="clearAll" onClick="toggle(this)" value="true" /> <span> Check All</span><br /></td>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (DictionaryEntry item in Model.CachedItems)
+						{
+						<tr>
+							<td class="center"><input type="checkbox" id="@item.Key" name="cacheKey" value="@item.Key" /></td>
+							@*<td class="center"><input type="checkbox" id="cacheKey" name="cacheKey" value="@item.Key" /></td>*@
+							<td>@item.Key</td>
+							<td>@item.Value.GetType()</td>
+							<td>
+								@if (item.Value is IContent)
+								{
+									@((item.Value as IContent).Name)
+									<span class="badge badge-warning">@((item.Value as IContent).ContentLink.ID)</span>
+								}
+								@if (item.Value is PageData)
+								{
+									@((item.Value as PageData).StartPublish)
+								}
+							</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			}
+		</div>
+	</div>
+
+	<script language="JavaScript">
+		function toggle(source) {
+			checkboxes = document.getElementsByName('cacheKey');
+			for (var i = 0, n = checkboxes.length; i < n; i++) {
+				checkboxes[i].checked = source.checked;
+			}
+		}
+
+	</script>
+</body>
+</html>

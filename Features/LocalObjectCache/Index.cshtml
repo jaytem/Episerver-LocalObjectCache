@@ -20,19 +20,17 @@
 	<!-- Light Theme -->
 	@Html.Raw(ClientResources.RenderResources("ShellCoreLightTheme"))
 
-	<link href="../../../../App_Themes/Default/Styles/system.css" type="text/css" rel="stylesheet">
-	<link href="../../../../App_Themes/Default/Styles/ToolButton.css" type="text/css" rel="stylesheet">
+	<link href="~/App_Themes/Default/Styles/system.css" type="text/css" rel="stylesheet">
+	<link href="~/App_Themes/Default/Styles/ToolButton.css" type="text/css" rel="stylesheet">
 
 	<style type="text/css">
-		.widthThird {
+		.table-column-width {
 			width: 30%;
 		}
 
-		.stripe tbody tr:nth-child(odd) {
+		.stripe tbody tr:nth-child(even) {
 			background-color: #f0f2f2;
 		}
-
-
 	</style>
 </head>
 <body id="body">
@@ -44,8 +42,6 @@
 				Local Object Cache
 			</h1>
 			<p class="EP-systemInfo">This tool shows all of the current local object cache, and allows the deletion of one or more cached items.</p>
-
-			@*<div id="FullRegion_ValidationSummary" class="EP-validationSummary" style="color: black; display: none;"></div>*@
 		</div>
 
 		<div class="epi-contentArea epi-formArea">
@@ -78,9 +74,9 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" id="clearAll" name="clearAll" onClick="toggle(this)" value="true" /></th>
-							<th class="widthThird">Key</th>
-							<th class="widthThird">Type</th>
-							<th class="widthThird">@(string.IsNullOrWhiteSpace(Model.FilteredBy) ? "Value" : "Name (ID) Published")</th>
+							<th class="table-column-width">Key</th>
+							<th class="table-column-width">Type</th>
+							<th class="table-column-width">@(string.IsNullOrWhiteSpace(Model.FilteredBy) ? "Value" : "Name (ID) Published")</th>
 						</tr>
 					</thead>
 					<tbody>

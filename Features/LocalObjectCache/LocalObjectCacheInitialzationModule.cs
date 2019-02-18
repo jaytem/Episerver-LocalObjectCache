@@ -9,7 +9,7 @@ namespace LOC.Cache.Business.Initialization
 	[ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
 	public class LocalObjectCacheInitialzationModule : IInitializableModule
 	{
-		private bool initialized = false;
+		private readonly bool initialized = false;
 
 		public void Initialize(InitializationEngine context)
 		{

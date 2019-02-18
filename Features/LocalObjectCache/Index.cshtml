@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title>Clear Object Cache</title>
+	<title>Local Object Cache</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
 	<!-- Shell -->
@@ -32,6 +32,7 @@
 			background-color: #f0f2f2;
 		}
 
+
 	</style>
 </head>
 <body id="body">
@@ -40,11 +41,11 @@
 	<div class="epi-contentContainer epi-padding">
 		<div class="epi-contentArea">
 			<h1 class="EP-Prefix">
-				Object Cache
+				Local Object Cache
 			</h1>
-			<p class="EP-systemInfo">This tool shows you the current object cache, and can clear cached items.</p>
+			<p class="EP-systemInfo">This tool shows all of the current local object cache, and allows the deletion of one or more cached items.</p>
 
-			<div id="FullRegion_ValidationSummary" class="EP-validationSummary" style="color: black; display: none;"></div>
+			@*<div id="FullRegion_ValidationSummary" class="EP-validationSummary" style="color: black; display: none;"></div>*@
 		</div>
 
 		<div class="epi-contentArea epi-formArea">
@@ -76,38 +77,40 @@
 				<table class="table table-condensed table-bordered table-condensed stripe">
 					<thead>
 						<tr>
-							<th></th>
+							<th><input type="checkbox" id="clearAll" name="clearAll" onClick="toggle(this)" value="true" /></th>
 							<th class="widthThird">Key</th>
 							<th class="widthThird">Type</th>
 							<th class="widthThird">@(string.IsNullOrWhiteSpace(Model.FilteredBy) ? "Value" : "Name (ID) Published")</th>
-						</tr>
-						<tr>
-							<td colspan="5"><input type="checkbox" id="clearAll" name="clearAll" onClick="toggle(this)" value="true" /> <span> Check All</span><br /></td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (DictionaryEntry item in Model.CachedItems)
 						{
-						<tr>
-							<td class="center"><input type="checkbox" id="@item.Key" name="cacheKey" value="@item.Key" /></td>
-							@*<td class="center"><input type="checkbox" id="cacheKey" name="cacheKey" value="@item.Key" /></td>*@
-							<td>@item.Key</td>
-							<td>@item.Value.GetType()</td>
-							<td>
-								@if (item.Value is IContent)
-								{
-									@((item.Value as IContent).Name)
-									<span class="badge badge-warning">@((item.Value as IContent).ContentLink.ID)</span>
-								}
-								@if (item.Value is PageData)
-								{
-									@((item.Value as PageData).StartPublish)
-								}
-							</td>
-						</tr>
+							<tr>
+								<td class="center"><input type="checkbox" id="@item.Key" name="cacheKey" value="@item.Key" /></td>
+								<td>@item.Key</td>
+								<td>@item.Value.GetType()</td>
+								<td>
+									@if (item.Value is IContent)
+									{
+										@((item.Value as IContent).Name)
+										<span class="badge badge-warning">@((item.Value as IContent).ContentLink.ID)</span>
+									}
+									@if (item.Value is PageData)
+									{
+										@((item.Value as PageData).StartPublish)
+									}
+								</td>
+							</tr>
 						}
 					</tbody>
 				</table>
+
+				<div class="epi-buttonDefault">
+					<span class="epi-cmsButton">
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="clearBotton" id="clearBottom" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+					</span>
+				</div>
 			}
 		</div>
 	</div>
@@ -119,7 +122,6 @@
 				checkboxes[i].checked = source.checked;
 			}
 		}
-
 	</script>
 </body>
 </html>

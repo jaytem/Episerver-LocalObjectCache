@@ -61,12 +61,15 @@
 
 			}
 
-			@using (Html.BeginForm("RemoveLocalCache", "LocalObjectCache", FormMethod.Post))
+			@using (Html.BeginForm("Action", "LocalObjectCache", FormMethod.Post))
 			{
 
 				<div class="epi-buttonDefault">
 					<span class="epi-cmsButton">
-						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="clear" id="clear" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="RemoveLocalCache" id="RemoveLocalCache" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+					</span>
+					<span class="epi-cmsButton">
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="removeLocalRemoteCache" id="removeLocalRemoteCache" value="Remove Local and Remote Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
 					</span>
 				</div>
 
@@ -104,7 +107,10 @@
 
 				<div class="epi-buttonDefault">
 					<span class="epi-cmsButton">
-						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="clearBotton" id="clearBottom" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="RemoveLocalCache" id="RemoveLocalCacheBottom" value="Remove Local Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
+					</span>
+					<span class="epi-cmsButton">
+						<input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" type="submit" name="removeLocalRemoteCache" id="removeLocalRemoteCacheBottom" value="Remove Local and Remote Cache Items" onmouseover="EPi.ToolButton.MouseDownHandler(this)" onmouseout="EPi.ToolButton.ResetMouseDownHandler(this)" />
 					</span>
 				</div>
 			}

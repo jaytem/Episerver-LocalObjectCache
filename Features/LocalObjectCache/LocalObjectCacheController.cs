@@ -50,14 +50,28 @@ namespace LOC.Cache.Controllers
 			return View("~/Features/LocalObjectCache/LocalObjectCache.cshtml", viewmodel);
 		}
 
-
-		public ActionResult RemoveLocalCache(string[] cacheKey)
+		[HttpParamAction]
+		public ActionResult RemoveLocalCache(string[] cacheKey, LocalObjectCacheViewModel model)
 		{
 			if (cacheKey != null)
 			{
 				foreach (string key in cacheKey)
 				{
 					cache.RemoveLocal(key);
+				}
+			}
+			return RedirectToAction("Index");
+		}
+
+		[HttpParamAction]
+		public ActionResult RemoveLocalRemoteCache(string[] cacheKey)
+		{
+			if (cacheKey != null)
+			{
+				foreach(string key in cacheKey)
+				{
+					cache.RemoveLocal(key);
+					cache.RemoveRemote(key);
 				}
 			}
 			return RedirectToAction("Index");
